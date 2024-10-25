@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,8 +7,9 @@
     <title>Login Form</title>
     <link rel="stylesheet" href="style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
 </head>
-
 <body>
     <div class="wrapper">
         <form action="">
@@ -29,15 +29,16 @@
             </div>
 
             <button type="submit" class="btn">Iniciar sesión</button>
+            <a href="home/home.html"></a>
 
             <div class="social-buttons">
-                <button type="button" class="social-btn facebook-btn">
+                <button type="button" class="social-btn facebook-btn" id="facebookSignIn">
                     <i class='bx bxl-facebook'></i> Iniciar sesión con Facebook
                 </button>
-                <button type="button" class="social-btn google-btn">
+                <button type="button" class="social-btn google-btn" id="googleSignIn">
                     <i class='bx bxl-google'></i> Iniciar sesión con Google
                 </button>
-                <button type="button" class="social-btn github-btn">
+                <button type="button" class="social-btn github-btn" id="githubSignIn">
                     <i class='bx bxl-github'></i> Iniciar sesión con GitHub
                 </button>
             </div>
@@ -47,6 +48,61 @@
             </div>
         </form>
     </div>
-</body>
 
+    <script>
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBPzFXRjL2xc5OZqJEaq5wc1FJWx26hR1M",
+            authDomain: "login-ba558.firebaseapp.app", // Cambia .com por .app
+            projectId: "login-ba558",
+            storageBucket: "login-ba558.appspot.app", // Cambia .com por .app
+            messagingSenderId: "956921426731",
+            appId: "1:956921426731:web:b1c5a7090cf4206cefcb6e",
+            measurementId: "G-M608T4TT9Q"
+        };
+        
+        // Inicializa Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Iniciar sesión con Google
+        document.getElementById('googleSignIn').addEventListener('click', function () {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    console.log("Usuario:", result.user);
+                    // Redirige a la página de inicio
+                    window.location.href = "home/home.html";
+                }).catch((error) => {
+                    console.error("Error:", error);
+                });
+        });
+
+        // Iniciar sesión con Facebook
+        document.getElementById('facebookSignIn').addEventListener('click', function () {
+            const provider = new firebase.auth.FacebookAuthProvider();
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    console.log("Usuario:", result.user);
+                    // Redirige a la página de inicio
+                    window.location.href = "home.html";
+                }).catch((error) => {
+                    console.error("Error:", error);
+                });
+        });
+
+        // Iniciar sesión con GitHub
+        document.getElementById('githubSignIn').addEventListener('click', function () {
+            const provider = new firebase.auth.GithubAuthProvider();
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    console.log("Usuario:", result.user);
+                    // Redirige a la página de inicio
+                    window.location.href = "home.html";
+                }).catch((error) => {
+                    console.error("Error:", error);
+                });
+        });
+    </script>
+</body>
 </html>
